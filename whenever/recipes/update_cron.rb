@@ -6,7 +6,7 @@
 # Set your application name here
 appname = "dailyfarm"
  
-if node[:fqdn].include?("floccus")
+#if node[:fqdn].include?("floccus")
  
   execute "whenever" do
     cwd "#{deploy_to}/current"
@@ -14,4 +14,4 @@ if node[:fqdn].include?("floccus")
     action :run
   end
   
-end
+#end
