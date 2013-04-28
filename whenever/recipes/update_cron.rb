@@ -9,7 +9,7 @@ appname = "dailyfarm"
 #if node[:fqdn].include?("floccus")
  
   execute "whenever" do
-    cwd "#{deploy_to}/current"
+    cwd "#{deploy[:deploy_to]}/current"
     command "sudo bundle exec whenever --update-crontab '#{appname}'"
     action :run
   end
