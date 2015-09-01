@@ -1,0 +1,2 @@
+
+production: redis://"<%= node["opsworks"]["layers"]["redis"]["instances"].map{|instance_name, instance_config| instance_config["private_ip"]}.first %>:6739/
