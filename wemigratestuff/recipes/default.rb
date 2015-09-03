@@ -5,12 +5,6 @@ node[:deploy].each do |application, deploy|
     owner "root"
   end
 
-  directory "#{deploy[:deploy_to]}/current/tmp/cache/assets/production" do
-    action :create
-    mode '0777'
-  end
-
-
   # // TEMP SETUP FOR STORING CONTENT
 
   directory "#{deploy[:deploy_to]}/shared/store" do
