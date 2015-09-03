@@ -11,7 +11,7 @@ node[:deploy].each do |application, deploy|
   end
 
 
-  // TEMP SETUP FOR STORING CONTENT
+  # // TEMP SETUP FOR STORING CONTENT
 
   directory "#{deploy[:deploy_to]}/shared/store" do
     action :create
