@@ -3,6 +3,7 @@ node[:deploy].each do |application, deploy|
   bash "stop sidekiq" do
     user "root"
     code "kill -s TERM `ps aux | grep \"sidekiq\" | grep -v grep | awk {'print$2'}`"
+    only_if "ps aux | grep \"sidekiq\" | grep -v grep"
   end
 
   bash "start sidekiq" do
