@@ -1,5 +1,11 @@
 node[:deploy].each do |application, deploy|
 
+  link "#{deploy[:deploy_to]}/current/store" do
+    owner "deploy"
+    group "www-data"
+    to "/mnt/wemigrate-store"
+  end
+
   bash "stop sidekiq" do
     user "root"
     code "kill -s TERM `ps aux | grep \"sidekiq\" | grep -v grep | awk {'print$2'}`"
