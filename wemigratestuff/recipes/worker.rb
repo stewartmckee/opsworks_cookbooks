@@ -21,11 +21,6 @@ node[:deploy].each do |application, deploy|
     # to "#{deploy[:deploy_to]}/shared/store"
   end
 
-  bash "git preload index" do
-    user "root"
-    code "git config core.preloadindex true"
-  end
-
   bash "stop sidekiq" do
     user "root"
     code "kill -s TERM `ps aux | grep \"sidekiq\" | grep -v grep | awk {'print$2'}`"
