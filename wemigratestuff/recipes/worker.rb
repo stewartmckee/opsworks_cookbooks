@@ -3,7 +3,8 @@ node[:deploy].each do |application, deploy|
   link "#{deploy[:deploy_to]}/current/store" do
     owner "deploy"
     group "www-data"
-    to "/mnt/wemigrate-store"
+    # to "/mnt/wemigrate-store"
+    to "#{deploy[:deploy_to]}/shared/store"
   end
 
   bash "stop sidekiq" do
