@@ -1,10 +1,27 @@
 node[:deploy].each do |application, deploy|
 
+mount -t nfs -o proto=tcp,port=2049 10.101.209.81:/mnt/data /mnt/data
+
+  nfs_server_ip = node["opsworks"]["layers"]["nfs_server"]["instances"].map{|instance_name, instance_config| instance_config["private_ip"]}.first
+
+  mount "/mnt/data" do
+    device "#{nfs_server_ip}:/mnt/data"
+    fstype 'nfs'
+    options "rw"
+    action :mount
+  end
+
   link "#{deploy[:deploy_to]}/current/store" do
     owner "deploy"
     group "www-data"
     # to "/mnt/wemigrate-store"
-    to "#{deploy[:deploy_to]}/shared/store"
+    to "/mnt/data"
+    # to "#{deploy[:deploy_to]}/shared/store"
+  end
+
+  bash "git preload index" do
+    user "root"
+    code "git config core.preloadindex true"
   end
 
   bash "stop sidekiq" do
