@@ -1,7 +1,5 @@
 node[:deploy].each do |application, deploy|
 
-mount -t nfs -o proto=tcp,port=2049 10.101.209.81:/mnt/data /mnt/data
-
   nfs_server_ip = node["opsworks"]["layers"]["nfs_server"]["instances"].map{|instance_name, instance_config| instance_config["private_ip"]}.first
 
   mount "/mnt/data" do
