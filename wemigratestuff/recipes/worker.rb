@@ -2,6 +2,10 @@ node[:deploy].each do |application, deploy|
 
   nfs_server_ip = node["opsworks"]["layers"]["nfs_server"]["instances"].map{|instance_name, instance_config| instance_config["private_ip"]}.first
 
+  directory "/mnt/data" do
+    user "root"
+  end
+
   mount "/mnt/data" do
     device "#{nfs_server_ip}:/mnt/data"
     fstype 'nfs'
