@@ -1,24 +1,23 @@
 node[:deploy].each do |application, deploy|
 
-  # nfs_server_ip = node["opsworks"]["layers"]["nfs_server"]["instances"].map{|instance_name, instance_config| instance_config["private_ip"]}.first
-  #
-  # directory "/mnt/data" do
-  #   user "root"
-  # end
+  nfs_server_ip = node["opsworks"]["layers"]["nfs_server"]["instances"].map{|instance_name, instance_config| instance_config["private_ip"]}.first
 
-  # mount "/mnt/data" do
-  #   device "#{nfs_server_ip}:/mnt/data"
-  #   fstype 'nfs'
-  #   options "rw"
-  #   action :mount
-  # end
+  directory "/mnt/data" do
+    user "root"
+  end
+
+  mount "/mnt/data" do
+    device "#{nfs_server_ip}:/mnt/data"
+    fstype 'nfs'
+    options "rw"
+    action :mount
+  end
 
   link "#{deploy[:deploy_to]}/current/store" do
     owner "deploy"
     group "www-data"
-    # to "/mnt/wemigrate-store"
-    # to "/mnt/data"
-    to "#{deploy[:deploy_to]}/shared/store"
+    to "/mnt/data"
+    # to "#{deploy[:deploy_to]}/shared/store"
   end
 
   bash "stop sidekiq" do
