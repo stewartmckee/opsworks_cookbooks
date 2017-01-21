@@ -9,7 +9,7 @@ node[:deploy].each do |application, deploy|
   end
 
   bash "restart redis-server" do
-    cwd "#{deploy[:deploy_to]}/current"
+    cwd "/etc"
     user "root"
     code "/etc/init.d/redis-server restart"
   end
